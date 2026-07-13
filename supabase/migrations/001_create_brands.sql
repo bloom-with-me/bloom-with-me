@@ -24,3 +24,9 @@ create policy "Public can read brands"
   on brands for select
   using (true);
 
+-- RLS policies control WHICH rows a role can see, but Postgres also
+-- requires the role to be allowed to query the table at all. Without this
+-- grant, requests fail with "permission denied for table brands" even
+-- though the policy above says the rows themselves are public.
+grant select on brands to anon, authenticated;
+

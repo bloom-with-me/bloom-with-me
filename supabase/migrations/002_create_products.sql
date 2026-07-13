@@ -27,3 +27,7 @@ alter table products enable row level security;
 create policy "Public can read active products"
   on products for select
   using (active = true);
+
+-- See the matching comment in 001_create_brands.sql — the RLS policy alone
+-- isn't enough; the role also needs a table-level grant.
+grant select on products to anon, authenticated;
